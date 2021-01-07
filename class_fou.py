@@ -8,4 +8,49 @@ class Fou(class_piece.Piece):
         super().__init__(couleur, 'Fou')
 
     def mouvementPiece(self, grille, coord):
-        print("Fou")
+        choix=[]
+
+        ligne=coord[1]
+        colone=coord[0]
+        while ligne<7 and colone<7 and grille[ligne+1][coord[0]+1]==' ':
+            choix.append([colone+1, ligne+1])
+            ligne+=1
+            colone+=1
+
+        if ligne<7 and colone<7:
+            choix.append([colone+1, ligne+1])
+
+
+        ligne=coord[1]
+        colone=coord[0]
+        while ligne>0 and colone>0 and grille[ligne-1][coord[0]-1]==' ':
+            choix.append([colone-1, ligne-1])
+            ligne-=1
+            colone-=1
+
+        if ligne>0 and colone>0:
+            choix.append([colone-1, ligne-1])
+
+
+        ligne=coord[1]
+        colone=coord[0]
+        while ligne<7 and colone>0 and grille[ligne+1][coord[0]-1]==' ':
+            choix.append([colone+1, ligne-1])
+            ligne+=1
+            colone-=1
+
+        if ligne<7 and colone>0:
+            choix.append([colone+1, ligne-1])
+
+
+        ligne=coord[1]
+        colone=coord[0]
+        while ligne>0 and colone<7 and grille[ligne-1][coord[0]+1]==' ':
+            choix.append([colone+1, ligne-1])
+            ligne-=1
+            colone+=1
+
+        if ligne>0 and colone<7:
+            choix.append([colone+1, ligne-1])
+
+        return choix

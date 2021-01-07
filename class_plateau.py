@@ -10,6 +10,7 @@ import class_cavalier as cc
 #======constantes et var globale======
 COULEURJOUEUR={1:'Blanc', 2:'Noir'}
 TRADLETTRENOMBRE={'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7}
+TRADNOMBRELETTRE={0:'a',1:'b',2:'c',3:'d',4:'e',5:'f',6:'g',7:'h'}
 
 #===============classes===============
 #Classe du plateau (principalement un tableau dans lequel on met des espaces ou des pièces)
@@ -31,17 +32,17 @@ class Plateau:
             self.__grille[joueur][0]=ct.Tour(couleur)
             self.__grille[joueur][1]=cc.Cavalier(couleur)
             self.__grille[joueur][2]=cf.Fou(couleur)
-            self.__grille[joueur][3]=cr.Roi(couleur)
-            self.__grille[joueur][4]=cd.Dame(couleur)
+            self.__grille[joueur][3]=cd.Dame(couleur)
+            self.__grille[joueur][4]=cr.Roi(couleur)
             self.__grille[joueur][5]=cf.Fou(couleur)
             self.__grille[joueur][6]=cc.Cavalier(couleur)
             self.__grille[joueur][7]=ct.Tour(couleur)
             for case in range (0,8):
                 self.__grille[posPions][case]=cp.Pion(couleur)
+            
     
     #Grosse fonction qui s'assure que le joueur entre quelque chose de valide (=une case avec une pièce qui lui appartiens)
-    #Important, il faudra rajouter le test "cette pièce peut bouger" ou donner la possibilité de changer de pièces sinon garre au soft block
-    #Renvoie des coordonées sous la forme [,]
+    #Renvoie des coordonées sous la forme [trad de la lettre en chiffre,coordonnée de la ligne dans le tableau]
     def choixPiece(self, joueur):
         selectionValide=False
         while selectionValide==False:
@@ -83,10 +84,76 @@ class Plateau:
         return [TRADLETTRENOMBRE[choix[0]],int(choix[1])-1]
     
     #Ne sert qu'à rediriger vers les directions de mouvements des différentes pièces (série de tests)
-    def choixMouvement(self, coord):
+    #Les fonctions mouvement des pièces ne servent qu'à lister les mouvements qu'elles sont capables de faire
+    def mouvementJoueur(self, joueur, coord):
         piece=self.__grille[coord[1]][coord[0]]
-        piece.mouvementPiece(self.__grille, coord)
+        listeMouvementsPossibles=piece.mouvementPiece(self.__grille, coord)
+        return self.selectionMouvement(coord, listeMouvementsPossibles)
+    
 
+#Grosse fonction qui sert cette fois a s'assurer que l'endroit ou on veut bouger la pièce est valide et entrer
+#Avec un bon forma
+    def selectionMouvement(self, coords, listeMouvements):
+        selectionValide=False
+        while selectionValide==False:
+            selectionValide=True
+            clean()
+            print(self)
+            print("Où voulez vous déplacer votre pièce? (entrez votre choix sous la forme a1)")
+            print("Appuyez sur Entrer pour revenir a la sélection des pièces")
+            print("Taper help permet de voir la liste des coups jouables et retours permet de retourner a la sélection de pièce")
+            choix=input()
+            #Debut des tests, c'est long mais nécéssaire pour gérer tout les cas et les erreurs
+            if choix=="help":
+                print("Liste des coups jouables :")
+                for coordonnees in listeMouvements:
+                    print(TRADNOMBRELETTRE[coordonnees[0]] + str(coordonnees[1]+1))
+                    selectionValide=False
+            if choix=="retours":
+                print("Retours a la selection de la pièce")
+                return False
+         
+        if len(choix)!=2:
+                selectionValide=False
+                print("Vous avez rentrer trop ou pas assez de caractères")
+            else:
+                try:
+                    if choix[0] not in ['a','b','c','d','e','f','g','h']:
+                        selectionValide=False
+                        print("La première coordonée doit être une lettre entre a et h.")
+                    if int(choix[1])<1 or int(choix[1])>8:
+                        selectionValide=False
+                        print("Choix hors plateau.")
+                    else:
+                        if self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]]==' ':
+                            selectionValide=False
+                            print("Il n'y a rien sur cette case")
+                        else:
+                            if self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]].getCouleur()!=COULEURJOUEUR[joueur]:
+                                selectionValide=False
+                                print("Cette pièce ne vous appartiens pas")
+                except ValueError:
+                    selectionValide=False
+                    print("Vous devez entrer une lettre minuscule suivit d'un chiffre")
+                except KeyError:
+                    selectionValide=False
+                    print("Vous devez entrer une lettre minuscule suivit d'un chiffre")
+                #FONCTION POUR S'ASSURER QUE LE MOUVEMENT EST POSSIBLE
+                #
+                #
+                #
+            if selectionValide==False:
+                print("\nVous devez rentrer les coordonées de l'endroit ou vous voulez bouger la piece")
+                print("La coordonnée doit être un mouvement valide")
+                print('Exemple de saisie correcte : "a1"')
+                print('Appuyez sur une entrer pour continuer')
+                input()
+        #FONCTION POUR BOUGER LA PIECE
+        #
+        #
+        #
+        #
+        return True
 
 
     #redefinition du print() quand on veut afficher le plateau il suffit de faire print(plateau)
@@ -107,4 +174,6 @@ class Plateau:
         return(chaine)
 
 #==============fonctions==============
-
+def clean():
+    for i in range(0,50):
+        print()

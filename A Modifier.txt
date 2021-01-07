@@ -1,0 +1,23 @@
+Toutes les fonctions sont faites pour les blancs, sa sera les mêmes fonctions mais il faut
+Penser a les changer
+
+
+Ajouter la fonctionalité "manger les gens d'une autre couleur"
+En gros rajouter des tests de couleurs, pour l'instant, un joueur peut "manger son propre pion"
+
+
+Fonctions mouvements a rajouter :
+cavalier
+fou
+dame
+
+
+on entre b5 càd colone puis lignes
+mais pour chercher dans un tableau a 2 dimensions, il faut entrer ligne puis colone
+
+C'est pour sa que les tests sont fait avec [ligne][colone] mais on append [colone, ligne]
+on est obliger de faire comme sa sinon c'est le bordel ou en tout cas j'ai pas trouver
+d'autres solutions
+
+Important, il faudra rajouter le test "cette pièce peut bouger" ou donner la possibilité
+de changer de pièces sinon garre au soft block

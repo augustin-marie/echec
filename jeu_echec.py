@@ -11,9 +11,11 @@ TRADLETTRENOMBRE={'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7}
 def tours(plateauJeu):
     joueur=1
     while True:
-        print(plateauJeu)
         print(f"Tour du joueur {joueur}, pour rappel, ces pions sont {COULEURJOUEUR[joueur]}")
-        plateauJeu.choixMouvement(plateauJeu.choixPiece(joueur))
+        aJouer=False
+        while aJouer==False:
+            print(plateauJeu)
+            aJouer=plateauJeu.mouvementJoueur(joueur, plateauJeu.choixPiece(joueur))
         joueur=abs(joueur-3)
         
 
@@ -26,5 +28,3 @@ def partie():
 #=========programme principal=========
 if __name__=="__main__":
     partie()
-
-
