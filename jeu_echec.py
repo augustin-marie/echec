@@ -1,80 +1,26 @@
 # coding: utf-8
 #===============imports===============
+import class_plateau
+import time
 
 #======constantes et var globale======
-
-#===============classes===============
-class Piece:
-    def __init__(self,c,nom):
-        self.__couleur=c
-        self.__nom=nom
-        self.__caractere=nom[0]
-    
-    def __repr__(self):
-        if self.__couleur=='Noir':
-            return(gras(self.__caractere))
-        else:
-            return(self.__caractere)
-
-class Pion(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Pion')
-
-class Tour(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Tour')
-
-class Cavalier(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Cavalier')
-
-class Fou(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Fou')
-
-class Dame(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Dame')
-
-class Roi(Piece):
-    def __init__(self,couleur):
-        super().__init__(couleur, 'Roi')
-
-class Plateau:
-    def __init__(self):
-        self.grille=[]
-        for lignes in range (0,8):
-            self.grille.append([' ',' ',' ',' ',' ',' ',' ',' '])
-        
-        for joueur in (0,7):
-            if joueur==0:
-                couleur='Noir'
-                posPions=1
-            else:
-                couleur='Blanc'
-                posPions=6
-            self.grille[joueur][0]=Tour(couleur)
-            self.grille[joueur][1]=Cavalier(couleur)
-            self.grille[joueur][2]=Fou(couleur)
-            self.grille[joueur][3]=Roi(couleur)
-            self.grille[joueur][4]=Dame(couleur)
-            self.grille[joueur][5]=Fou(couleur)
-            self.grille[joueur][6]=Cavalier(couleur)
-            self.grille[joueur][7]=Tour(couleur)
-            for case in range (0,8):
-                self.grille[posPions][case]=Pion(couleur)
-        
-    def __str__(self):
-        return str(self.grille)
-
+COULEURJOUEUR={1:'Blanc', 2:'Noir'}
+TRADLETTRENOMBRE={'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7}
 
 #==============fonctions==============
-def gras(text):
-    return '\033[1m'+text+'\033[0m'
+def tours(plateauJeu):
+    joueur=1
+    while True:
+        print(plateauJeu)
+        print(f"Tour du joueur {joueur}, pour rappel, ces pions sont {COULEURJOUEUR[joueur]}")
+        plateauJeu.choixMouvement(plateauJeu.choixPiece(joueur))
+        joueur=abs(joueur-3)
+        
 
+#Fonction qui gère la partie en général, c'est a dire l'initialisation du plateau, la gestion des tours et l'affichage du gagnant
 def partie():
-    plateauJeu=Plateau()
-    print(plateauJeu)
+    plateauJeu=class_plateau.Plateau()
+    tours(plateauJeu)
 
 
 #=========programme principal=========
