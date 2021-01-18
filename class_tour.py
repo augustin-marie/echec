@@ -16,7 +16,8 @@ class Tour(class_piece.Piece):
             ligne+=1
 
         if ligne!=7:
-            choix.append([coord[0], ligne+1])
+            if self.getCouleur()!=grille[ligne+1][coord[0]].getCouleur():
+                choix.append([coord[0], ligne+1])
 
 
         ligne=coord[1]
@@ -25,7 +26,8 @@ class Tour(class_piece.Piece):
             ligne-=1
 
         if ligne!=0:
-            choix.append([coord[0], ligne-1])
+            if self.getCouleur()!=grille[ligne-1][coord[0]].getCouleur():
+                choix.append([coord[0], ligne-1])
 
 
         colone=coord[0]
@@ -34,7 +36,8 @@ class Tour(class_piece.Piece):
             colone+=1
 
         if colone!=7:
-            choix.append([colone+1, coord[1]])
+            if self.getCouleur()!=grille[coord[1]][colone+1].getCouleur():
+                choix.append([colone+1, coord[1]])
 
 
         colone=coord[0]
@@ -43,11 +46,8 @@ class Tour(class_piece.Piece):
             colone-=1
 
         if colone!=0:
-            choix.append([colone-1, coord[1]])
-
-        
-        if choix!=[]:
-            self.__dejaBouger=True
+            if self.getCouleur()!=grille[coord[1]][colone-1].getCouleur():
+                choix.append([colone-1, coord[1]])
 
         return choix
 

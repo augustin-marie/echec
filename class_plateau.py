@@ -6,6 +6,7 @@ import class_fou as cf
 import class_dame as cd
 import class_roi as cr
 import class_cavalier as cc
+import time
 
 #======constantes et var globale======
 COULEURJOUEUR={1:'Blanc', 2:'Noir'}
@@ -80,6 +81,7 @@ class Plateau:
                 print('Exemple de saisie correcte : "a1"')
                 print('Appuyez sur une entrer pour continuer')
                 input()
+                clean()
                 print(self)
         return [TRADLETTRENOMBRE[choix[0]],int(choix[1])-1]
     
@@ -100,22 +102,28 @@ class Plateau:
             clean()
             print(self)
             print("Où voulez vous déplacer votre pièce? (entrez votre choix sous la forme a1)")
-            print("Appuyez sur Entrer pour revenir a la sélection des pièces")
+            print("Taper exit permet de déplacer une autre pièce a la place")
             print("Taper help permet de voir la liste des coups jouables et retours permet de retourner a la sélection de pièce")
             choix=input()
             #Debut des tests, c'est long mais nécéssaire pour gérer tout les cas et les erreurs
             if choix=="help":
-                print("Liste des coups jouables :")
-                for coordonnees in listeMouvements:
-                    print(TRADNOMBRELETTRE[coordonnees[0]] + str(coordonnees[1]+1))
-                    selectionValide=False
-            if choix=="retours":
+                if len(listeMouvements)!=0:
+                    print("Liste des coups jouables :")
+                    for coordonnees in listeMouvements:
+                        print(TRADNOMBRELETTRE[coordonnees[0]] + str(coordonnees[1]+1))
+                else:
+                    print("Il n'y a aucun coups jouables avec cette pièce je vous conseil de tapper \"exit\".")
+                selectionValide=False
+                    
+            if choix=="exit":
                 print("Retours a la selection de la pièce")
+                time.sleep(2)
                 return False
          
-        if len(choix)!=2:
-                selectionValide=False
-                print("Vous avez rentrer trop ou pas assez de caractères")
+            if len(choix)!=2:
+                if choix!="help":
+                    selectionValide=False
+                    print("Vous avez rentrer trop ou pas assez de caractères")
             else:
                 try:
                     if choix[0] not in ['a','b','c','d','e','f','g','h']:
@@ -125,34 +133,27 @@ class Plateau:
                         selectionValide=False
                         print("Choix hors plateau.")
                     else:
-                        if self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]]==' ':
+                        if [TRADLETTRENOMBRE[choix[0]], int(choix[1])-1] not in listeMouvements:
                             selectionValide=False
-                            print("Il n'y a rien sur cette case")
-                        else:
-                            if self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]].getCouleur()!=COULEURJOUEUR[joueur]:
-                                selectionValide=False
-                                print("Cette pièce ne vous appartiens pas")
+                            print("Vous ne pouvez pas déplacer cette pièce ici")
                 except ValueError:
                     selectionValide=False
                     print("Vous devez entrer une lettre minuscule suivit d'un chiffre")
                 except KeyError:
                     selectionValide=False
                     print("Vous devez entrer une lettre minuscule suivit d'un chiffre")
-                #FONCTION POUR S'ASSURER QUE LE MOUVEMENT EST POSSIBLE
-                #
-                #
-                #
             if selectionValide==False:
-                print("\nVous devez rentrer les coordonées de l'endroit ou vous voulez bouger la piece")
-                print("La coordonnée doit être un mouvement valide")
-                print('Exemple de saisie correcte : "a1"')
+                if choix!="help":
+                    print("\nVous devez rentrer les coordonées de l'endroit ou vous voulez bouger la piece")
+                    print("La coordonnée doit être un mouvement valide")
+                    print('Exemple de saisie correcte : "a1"')
                 print('Appuyez sur une entrer pour continuer')
                 input()
-        #FONCTION POUR BOUGER LA PIECE
-        #
-        #
-        #
-        #
+        #On bouge les pièces ici
+        #(on duplique la pièce sur une autre case en écrasant la pièce potentiellement présente
+        #puis on efface le duplicat de la pièce sur la case de départ)
+        self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]]=self.__grille[coords[1]][coords[0]]
+        self.__grille[coords[1]][coords[0]]=' '
         return True
 
 

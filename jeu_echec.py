@@ -16,6 +16,7 @@ def tours(plateauJeu):
         while aJouer==False:
             print(plateauJeu)
             aJouer=plateauJeu.mouvementJoueur(joueur, plateauJeu.choixPiece(joueur))
+            class_plateau.clean()
         joueur=abs(joueur-3)
         
 
