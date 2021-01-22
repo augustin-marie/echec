@@ -110,7 +110,10 @@ class Plateau:
                 if len(listeMouvements)!=0:
                     print("Liste des coups jouables :")
                     for coordonnees in listeMouvements:
-                        print(TRADNOMBRELETTRE[coordonnees[0]] + str(coordonnees[1]+1))
+                        print(TRADNOMBRELETTRE[coordonnees[0]] + str(coordonnees[1]+1), end='')
+                        if listeMouvements.index(coordonnees)!=len(listeMouvements)-1:
+                            print(", ", end='')
+                    print()
                 else:
                     print("Il n'y a aucun coups jouables avec cette pièce je vous conseil de tapper \"exit\".")
                 selectionValide=False

@@ -14,12 +14,12 @@ class Cavalier(class_piece.Piece):
             for chgmtColone in (-1,1):
                 if coord[0]+chgmtLigne<=7 and coord[0]+chgmtLigne>=0 and coord[1]+chgmtColone<=7 and coord[1]+chgmtColone>=0:
                     if grille[coord[1]+chgmtColone][coord[0]+chgmtLigne]==' ' or grille[coord[1]+chgmtColone][coord[0]+chgmtLigne].getCouleur()!=self.getCouleur():
-                        choix.append([coord[1]+chgmtColone,coord[0]+chgmtLigne])
+                        choix.append([coord[0]+chgmtLigne, coord[1]+chgmtColone])
         
         for chgmtLigne in (-1,1):
             for chgmtColone in (-2,2):
                 if coord[0]+chgmtLigne<=7 and coord[0]+chgmtLigne>=0 and coord[1]+chgmtColone<=7 and coord[1]+chgmtColone>=0:
                     if grille[coord[1]+chgmtColone][coord[0]+chgmtLigne]==' ' or grille[coord[1]+chgmtColone][coord[0]+chgmtLigne].getCouleur()!=self.getCouleur():
-                        choix.append([coord[1]+chgmtColone,coord[0]+chgmtLigne])
+                        choix.append([coord[0]+chgmtLigne, coord[1]+chgmtColone])
 
         return choix

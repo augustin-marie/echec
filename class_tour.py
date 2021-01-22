@@ -10,40 +10,41 @@ class Tour(class_piece.Piece):
     
     def mouvementPiece(self, grille, coord):
         choix=[]
+        #ligne +
         ligne=coord[1]
         while ligne<7 and grille[ligne+1][coord[0]]==' ':
-            choix.append([coord[0], ligne+1])
             ligne+=1
+            choix.append([coord[0], ligne])
 
         if ligne!=7:
             if self.getCouleur()!=grille[ligne+1][coord[0]].getCouleur():
                 choix.append([coord[0], ligne+1])
 
-
+        #ligne -
         ligne=coord[1]
         while ligne>0 and grille[ligne-1][coord[0]]==' ':
-            choix.append([coord[0], ligne-1])
             ligne-=1
+            choix.append([coord[0], ligne])
 
         if ligne!=0:
             if self.getCouleur()!=grille[ligne-1][coord[0]].getCouleur():
                 choix.append([coord[0], ligne-1])
 
-
+        #colone +
         colone=coord[0]
         while colone<7 and grille[coord[1]][colone+1]==' ':
-            choix.append([colone+1, coord[1]])
             colone+=1
+            choix.append([colone, coord[1]])
 
         if colone!=7:
             if self.getCouleur()!=grille[coord[1]][colone+1].getCouleur():
                 choix.append([colone+1, coord[1]])
 
-
+        #colone -
         colone=coord[0]
         while colone>0 and grille[coord[1]][colone-1]==' ':
-            choix.append([colone+1, coord[1]])
             colone-=1
+            choix.append([colone, coord[1]])
 
         if colone!=0:
             if self.getCouleur()!=grille[coord[1]][colone-1].getCouleur():
