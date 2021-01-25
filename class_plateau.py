@@ -157,7 +157,55 @@ class Plateau:
         #puis on efface le duplicat de la pièce sur la case de départ)
         self.__grille[int(choix[1])-1][TRADLETTRENOMBRE[choix[0]]]=self.__grille[coords[1]][coords[0]]
         self.__grille[coords[1]][coords[0]]=' '
+        self.testPromotion([int(choix[1])-1, TRADLETTRENOMBRE[choix[0]]])
         return True
+    
+    #Fonction de prommotion d'un pion
+    def prommotion(self, coords):
+        selectionValide=False
+        couleur=self.__grille[coords[0]][coords[1]].getCouleur()
+        print("Vous avez ammener votre pion jusqu'a la dernière ligne adverse.")
+        print("La règle de la prommotion vous oblige a transformer se pion en n'importe quelle autre pièce sauf roi.")
+        while selectionValide==False:
+            print("Entrez en quel pièce vous voulez transformer votre pions.")
+            print("(Dame, Cavalier, Tour, Fou)")
+            try:
+                selectionValide=True
+                piece=input()
+                piece=piece.upper()
+                if piece=="DAME":
+                    self.__grille[coords[0]][coords[1]]=cd.Dame(couleur)
+                elif piece=="CAVALIER":
+                    self.__grille[coords[0]][coords[1]]=cc.Cavalier(couleur)
+                elif piece=="TOUR":
+                    self.__grille[coords[0]][coords[1]]=ct.Tour(couleur)
+                elif piece=="FOU":
+                    self.__grille[coords[0]][coords[1]]=cf.Fou(couleur)
+                else:
+                    selectionValide=False
+                    print("Selection non valide")
+            except ValueError:
+                selectionValide=False
+                print("Selection non valide")
+
+
+    #Recherche le roi du joueur couleur
+    def rechercheRoi(self, couleur):
+        for ligne in self.__grille:
+            for case in ligne:
+                if case!=' ' and case.getNom()=="Roi" and case.getCouleur()==couleur:
+                    return True
+        return False
+
+
+    #Test la prommotion d'un pion
+    def testPromotion(self, coords):
+        if self.__grille[coords[0]][coords[1]].getNom()=="Pion":
+            couleur=self.__grille[coords[0]][coords[1]].getCouleur()
+            if couleur=="Blanc" and coords[0]==0:
+                self.prommotion(coords)
+            elif coords[0]==7:
+                self.prommotion(coords)
 
 
     #redefinition du print() quand on veut afficher le plateau il suffit de faire print(plateau)

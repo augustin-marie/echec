@@ -17,7 +17,16 @@ def tours(plateauJeu):
             print(plateauJeu)
             aJouer=plateauJeu.mouvementJoueur(joueur, plateauJeu.choixPiece(joueur))
             class_plateau.clean()
+        #On regarde si le roi de l'autre joueur à été tuer
+        if plateauJeu.rechercheRoi(COULEURJOUEUR[abs(joueur-3)])==False:
+            annonceVictoire(COULEURJOUEUR[joueur], plateauJeu)
+            return
         joueur=abs(joueur-3)
+
+#Sert uniquement a afficher le nom du gagnant
+def annonceVictoire(joueurGagnant, plateau):
+    print(plateau)
+    print(f"Le roi adverse à été tuer, le joueur des pions {joueurGagnant} gagne !")
         
 
 #Fonction qui gère la partie en général, c'est a dire l'initialisation du plateau, la gestion des tours et l'affichage du gagnant

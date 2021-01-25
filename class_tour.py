@@ -6,10 +6,13 @@ import class_piece
 class Tour(class_piece.Piece):
     def __init__(self,couleur):
         super().__init__(couleur, 'Tour')
-        self.__dejaBouger=False
     
     def mouvementPiece(self, grille, coord):
         choix=[]
+        #On vérifie les 4 lignes/colones en prenant toutes les cases jusqu'à ce qu'on tombe sur les bords du plateau ou une pièce
+        #Si la pièce appartiens a l'adversaire, on rajoute sa case dans les déplacement possible
+
+
         #ligne +
         ligne=coord[1]
         while ligne<7 and grille[ligne+1][coord[0]]==' ':
@@ -51,6 +54,3 @@ class Tour(class_piece.Piece):
                 choix.append([colone-1, coord[1]])
 
         return choix
-
-#le aDejaBouger sert a programmer le rock pour pas qu'on puisse retourner a la pos de départ et que sa marche
-#même si on a déjà bouger

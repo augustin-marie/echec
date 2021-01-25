@@ -12,18 +12,17 @@ class Dame(class_piece.Piece):
     
     def mouvementPiece(self, grille, coord):
         choix=[]
-        mouvementTour=class_tour.Tour(self.getCouleur).mouvementPiece(grille, coord)
-        mouvementFou=class_fou.Fou(self.getCouleur).mouvementPiece(grille, coord)
+        #Pour la Dame, on simule les mouvements d'une tour et d'un fou qui serait a son emplacement
+        #Ensuite on dit que les déplacement possibles de la Dame est la somme des déplacements possibles dans les deux simulations
+
+        #simultaions
+        mouvementTour=class_tour.Tour(self.getCouleur()).mouvementPiece(grille, coord)
+        mouvementFou=class_fou.Fou(self.getCouleur()).mouvementPiece(grille, coord)
+
+        #somme des mouvements
         for case in mouvementTour:
             choix.append(case)
         for case in mouvementFou:
             choix.append(case)
 
         return choix
-        
-
-
-
-#C'est pour sa que les tests sont fait avec [ligne][colone] mais on append [colone, ligne]
-#on est obliger de faire comme sa sinon c'est le bordel ou en tout cas j'ai pas trouver
-#d'autres solutions

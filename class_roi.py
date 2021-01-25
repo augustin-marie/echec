@@ -6,7 +6,6 @@ import class_piece
 class Roi(class_piece.Piece):
     def __init__(self,couleur):
         super().__init__(couleur, 'Roi')
-        self.__dejaBouger=False
     
     def mouvementPiece(self, grille, coord):
         choix=[]
@@ -19,7 +18,3 @@ class Roi(class_piece.Piece):
                             choix.append([coord[0]+chgmtLigne, coord[1]+chgmtColone])
         
         return choix
-
-
-#le aDejaBouger sert a programmer le rock pour pas qu'on puisse retourner a la pos de départ et que sa marche
-#même si on a déjà bouger
